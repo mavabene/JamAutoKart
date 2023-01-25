@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"name": "EncoderVandA",
+			"path": ".."
+		}
+	],
+	"settings": {
+		"C_Cpp.errorSquiggles": "enabled"
+	}
+}
