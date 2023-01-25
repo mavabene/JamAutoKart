@@ -112,8 +112,10 @@ void err(Sensor *sens)
 void CtrlLoop(PidLoop *loop, Sensor *sens, Actuator *act)
 {
     err(sens);
-    act->CmdPct = loop->Kp * (-1.0) * sens->Perr - loop->Kd * sens->Vel + loop->Ki * sens->SumErr + sens->Vff;
+    float commPct = loop->Kp * (-1.0) * sens->Perr - loop->Kd * sens->Vel + loop->Ki * sens->SumErr + sens->Vff;
+    act->CmdPct = constrain(commPct, -100, 100);
     act->Cmd = (act->CmdPct/100) * act->CmdMax;
+    
 }
 
 

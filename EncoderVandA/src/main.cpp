@@ -11,8 +11,8 @@ void setup() {
   Serial.begin(9600);
   setupLED();
   init1=true;
-  SteeringPID->Kp = 5;
-  SteeringPID->Kd = 0;
+  SteeringPID->Kp = 4;
+  SteeringPID->Kd = 1;
   SteeringPID->Ki = 0;
   SteeringPot->SensorMin = 350;
   SteeringPot->SensorMax = 850;
@@ -56,7 +56,7 @@ void loop() {
         Serial.print(current_angle, 1);
         Serial.print("\t");
         Serial.print("Angular Velocity: ");
-        Serial.print(steering_angular_vel, 1);
+        Serial.print(SteeringPot->Vel, 1);
         Serial.print("\t");
 
         Serial.print("\t");
@@ -75,7 +75,7 @@ void loop() {
   if (((currentMillis-angle_detect_start_time) >= 20)) // set up time interval for getting dx
     { 
       steering_angular_vel = getDx(angle_detect_start_time, currentMillis, start_angle, current_angle);
-      steering_angular_vel = UnitConversion(steering_angular_vel,deg_per_ms_TO_deg_per_sec);
+      SteeringPot->Vel = UnitConversion(steering_angular_vel,deg_per_ms_TO_deg_per_sec);
       start_angle = current_angle;
       angle_detect_start_time = currentMillis;
     }
