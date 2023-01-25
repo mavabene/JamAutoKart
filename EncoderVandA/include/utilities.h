@@ -7,6 +7,7 @@ struct PidLoop
   float Kd = 1.0;
   float Ki = 1.0;
   float Setpoint = 1.0;
+  // add sensor and actuator so loop can be called and provide all info
 };
 
 struct Sensor
@@ -80,7 +81,7 @@ int SensorInputToUnitsInt(int sensorValue, int minSensorVal, int maxSensorVal, i
 int SensorInputToUnitsFloat(float sensorValue, float minSensorVal, float maxSensorVal, float minUnit, float maxUnit)
 {
     float Value = max(sensorValue, minSensorVal);
-    Value = min(sensorValue, maxSensorVal);
+    Value = min(Value, maxSensorVal);
 
     float val = (Value-minSensorVal)/(maxSensorVal-minSensorVal)*(maxUnit-minUnit)+minUnit;
     return val;
@@ -90,7 +91,7 @@ int SensorInputToUnitsFloat(float sensorValue, float minSensorVal, float maxSens
 float SensorInputToUnitsFloatPtr(Sensor *sens)
 {
     float Value = max(sens->SensorVal, sens->SensorMin);
-    Value = min(sens->SensorVal, sens->SensorMax);
+    Value = min(Value, sens->SensorMax);
 
     float val = (Value - sens->SensorMin)/(sens->SensorMax - sens->SensorMin)*(sens->MaxEngVal - sens->MinEngVal)+sens->MinEngVal;
     return val;
