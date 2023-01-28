@@ -23,6 +23,8 @@ struct Sensor
   float Vel = 0;  // speed of actuator correlates to Verr
   float SumErr = 0; // integral error
   float Vff = 0; // Velocity feedforward term
+  int InputPin = 1;
+  int InputVarAdd = *test_ptr; // Input from upper level the setpoint will be updated to
 };
 
 struct Actuator
@@ -118,4 +120,10 @@ void CtrlLoop(PidLoop *loop, Sensor *sens, Actuator *act)
     
 }
 
+void UpdateSensor(Sensor *sens)
+{
+    sens->SensorVal = analogRead(sens->InputPin);
+    sens->Setpoint = test_var; // arbitrary for testing, this will be set to val sent from upper level
+    sens->EngVal = SensorInputToUnitsFloatPtr(sens);
+}
 

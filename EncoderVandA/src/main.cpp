@@ -10,14 +10,7 @@ void setup() {
   // initialize digital pin LED_BUILTIN as an output.
   Serial.begin(9600);
   setupLED();
-  init1=true;
-  SteeringPID->Kp = 4;
-  SteeringPID->Kd = 1;
-  SteeringPID->Ki = 0;
-  SteeringPot->SensorMin = 350;
-  SteeringPot->SensorMax = 850;
-  SteeringPot->MinEngVal = -45;
-  SteeringPot->MaxEngVal = 45;
+  setupSteeringControl();
   // SteeringMotor->ActMaxEng = xx;
   // SteeringMotor->ActMinEng = xx;
   // SteeringMotor->ActMaxRaw = xx;
@@ -29,18 +22,11 @@ void setup() {
 // the loop function runs over and over again forever
 void loop() {
   
-  if (init1==true)
-    {
-      
-      init1=false;
-    }
-  
   currentMillis = millis();
   SteeringPot->SensorVal = getAnalogInt(STEERING_ANGLE_POT);
   SteeringPot->Setpoint = 30;
   CtrlLoop(SteeringPID,SteeringPot,SteeringMotor);
-  current_angle = SensorInputToUnitsFloatPtr(SteeringPot);
-  SteeringPot->EngVal = current_angle;
+  SteeringPot->EngVal = SensorInputToUnitsFloatPtr(SteeringPot);
 
   //sens->EngVal - sens->Setpoint;
   
@@ -53,7 +39,7 @@ void loop() {
   if ((currentMillis-startMillis) >= 1) // && (current_angle != start_angle))
     { 
         Serial.print("Current angle: ");
-        Serial.print(current_angle, 1);
+        Serial.print(SteeringPot->EngVal, 1);
         Serial.print("\t");
         Serial.print("Angular Velocity: ");
         Serial.print(SteeringPot->Vel, 1);

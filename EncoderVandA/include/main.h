@@ -3,6 +3,8 @@
 #include <pin.h>
 #include <vars.h>
 #include <utilities.h>
+#include <steering.h>
+
 
 Sensor *SteeringPot = new Sensor();
 PidLoop *SteeringPID = new PidLoop();

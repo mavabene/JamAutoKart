@@ -12,7 +12,15 @@ float Steering_pot_inputVal = 400;
 
 int derivativeIdx =0;
 
-// steering
+
+// conversions
+float deg_per_ms_TO_deg_per_sec = 1000;
+
+//debug
+float test_var = 30;
+int *test_ptr;
+
+//steering
 float angle_dt = 20; // in milliseconds
 int idxSteeringV = 0;
 float dSumSteeringV = 0;
@@ -24,7 +32,3 @@ float max_detectable_angle = 45;
 float steering_angular_vel = 0;
 unsigned long angle_detect_start_time = 0;
 float last_angle = 0;
-
-// conversions
-float deg_per_ms_TO_deg_per_sec = 1000;
-
